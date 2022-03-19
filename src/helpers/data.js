@@ -11,6 +11,7 @@ function fetchDoctorDetails(name) {
     const street = faker.address.streetAddress();
     const city = faker.address.cityName();
     const state = faker.address.stateAbbr();
+    const dateCreated = Date.now();
     const data = {
         id,
         first_name: firstName,
@@ -22,6 +23,7 @@ function fetchDoctorDetails(name) {
         street,
         city,
         state,
+        date_created: dateCreated
     };
     return data;
 }
