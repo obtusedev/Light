@@ -1,6 +1,17 @@
+const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 const PORT = 3000;
+
+/* Database */
+mongoose
+    .connect("mongodb://localhost:27017/light")
+    .then(() => {
+        console.log("Connected to db");
+    })
+    .catch(err => {
+        console.error(err);
+    });
 
 /* Routes */
 const doctorRoutes = require("./routes/doctor.route.js");
