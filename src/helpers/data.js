@@ -7,7 +7,7 @@ function fetchDoctorDetails(name) {
     const email = faker.internet.email(name);
     const phone = faker.phone.phoneNumber("###-###-####");
     const department = faker.helpers.randomize(departments);
-    const clinicName = faker.company.companyName(Math.floor(Math.random() * 4));
+    const clinicName = faker.company.companyName(Math.floor(Math.random() * 3));
     const street = faker.address.streetAddress();
     const city = faker.address.cityName();
     const state = faker.address.stateAbbr();
