@@ -15,11 +15,12 @@ mongoose
 
 /* Routes */
 const doctorRoutes = require("./routes/doctor.route.js");
-
+const clinicRoutes = require("./routes/clinic.route.js");
 /* Middleware */
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api/v1/doctor", doctorRoutes);
+app.use("/api/v1/clinic", clinicRoutes);
 
 app.get("/", (req, res) => {
     res.send("Welcome!");
