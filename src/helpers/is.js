@@ -10,6 +10,14 @@ function isEmptyString(s) {
     return false;
 }
 
+function isPositiveAndNumber(n) {
+    if (typeof(n) === "number" && n > 0) {
+        return true;
+    }
+    return false;
+}
+
 module.exports = {
-    isEmptyString: isEmptyString
+    isEmptyString: isEmptyString,
+    isPositiveAndNumber: isPositiveAndNumber
 };
