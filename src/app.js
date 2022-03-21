@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
+const helmet = require("helmet");
 const app = express();
 const PORT = 3000;
 
@@ -19,6 +20,7 @@ const clinicRoutes = require("./routes/clinic.route.js");
 /* Middleware */
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(helmet());
 app.use("/api/v1/doctor", doctorRoutes);
 app.use("/api/v1/clinic", clinicRoutes);
 
