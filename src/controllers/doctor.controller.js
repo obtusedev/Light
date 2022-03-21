@@ -8,6 +8,18 @@ function queryDoctor(req, res) {
     const { q = "" } = req.query;
     if (isEmptyString(q)) {
         return new JSONResponse(400, "Search query is empty").send(req, res);
+    } else if (isPositiveAndNumber(q)) {
+        // if q is a number then search by id
+        Doctor.find({ id: q }, "-_id -__v", (err, result) => {
+            if (err) {
+                return new JSONResponse(400, err.message).send(req, res);
+            } else if (result.length === 0) {
+                return new JSONResponse(404, `No results`).send(req, res);
+            }
+            return new JSONResponse(200, result).send(req, res);
+        })
+    } else {
+        return new JSONResponse(404, "Not found").send(req, res);
     }
 }
 
