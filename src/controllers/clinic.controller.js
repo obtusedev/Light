@@ -1,22 +1,14 @@
 const Doctor = require("../models/Doctor.js");
+const { JSONResponse } = require("../helpers/response.js");
 
 function getClinics(req, res) {
     Doctor.find({}).distinct("clinic", (err, clinics) => {
         if (err) {
-            res.status(400).json({
-                status: 400,
-                msg: err.message,
-            });
+            return new JSONResponse(400, err.message).send(req, res);
         } else if (clinics.length === 0) {
-            res.status(404).json({
-                status: 404,
-                msg: `No clinics`,
-            });
+            return new JSONResponse(404, "No clinic found").send(req, res);
         } else {
-            res.status(200).json({
-                status: 200,
-                clinics,
-            });
+            return new JSONResponse(200, clinics).send(req, res);
         }
     });
 }
@@ -26,20 +18,11 @@ function getDoctorsFromClinic(req, res) {
     const re = new RegExp(clinic, "i"); // 'i' for case insensitive
     Doctor.find({ clinic: re }, "-_id -__v").exec((err, doctors) => {
         if (err) {
-            res.status(400).json({
-                status: 400,
-                msg: err.message,
-            });
+            return new JSONResponse(400, err.message).send(req, res);
         } else if (doctors.length === 0) {
-            res.status(400).json({
-                status: 400,
-                msg: "No doctors found for this clinic",
-            });
+            return new JSONResponse(404, "No doctors found for this clinic").send(req, res);
         } else {
-            res.status(200).json({
-                status: 200,
-                doctors,
-            });
+            return new JSONResponse(200, doctors).send(req, res);
         }
     });
 }

@@ -2,16 +2,12 @@ const { fetchDoctorDetails } = require("../helpers/data.js");
 const validator = require("validator");
 const Doctor = require("../models/Doctor.js");
 const { isEmptyString, isPositiveAndNumber } = require("../helpers/is.js");
+const { JSONResponse } = require("../helpers/response.js");
 
-function findDoctor(req, res) {
+function queryDoctor(req, res) {
     const { q = "" } = req.query;
     if (isEmptyString(q)) {
-        res.status(400).json({
-            status: 400,
-            msg: "Empty search query",
-        });
-    } else {
-        const doctor = Doctor.find({});
+        return new JSONResponse(400, "Search query is empty").send(req, res);
     }
 }
 
@@ -20,27 +16,15 @@ function findDoctorById(req, res) {
     if (isPositiveAndNumber(parseInt(id))) {
         Doctor.find({ id: id }, "-_id -__v", (err, doctor) => {
             if (err) {
-                res.status(400).json({
-                    status: 400,
-                    msg: err.message,
-                });
+                return new JSONResponse(400, err.message).send(req, res);
             } else if (doctor.length === 0) {
-                res.status(404).json({
-                    status: 404,
-                    msg: `No doctor with id: ${id} found`
-                })
+                return new JSONResponse(404, `No doctor with id: ${id} found`).send(req, res);
             } else {
-                res.status(200).json({
-                    status: 200,
-                    doctor,
-                });
+                return new JSONResponse(200, doctor).send(req, res);
             }
         });
     } else {
-        res.status(400).json({
-            status: 400,
-            msg: "Invalid id parameter"
-        });
+        return new JSONResponse(400, "Invalid id parameter").send(req, res);
     }
 }
 
@@ -50,27 +34,18 @@ function createDoctor(req, res) {
         const doctor = fetchDoctorDetails(name);
         Doctor.create(doctor, err => {
             if (err) {
-                res.status(400).json({
-                    status: 400,
-                    msg: err.message,
-                });
+                return new JSONResponse(400, err.message).send(req, res);
             } else {
-                res.status(200).json({
-                    status: 200,
-                    doctor,
-                });
+                return new JSONResponse(200, doctor).send(req, res);
             }
         });
     } else {
-        res.status(400).json({
-            status: 400,
-            msg: "Bad Request",
-        });
+        return new JSONResponse(400, "Bad Request").send(req, res);
     }
 }
 
 module.exports = {
-    findDoctor: findDoctor,
+    queryDoctor: queryDoctor,
     findDoctorById: findDoctorById,
     createDoctor: createDoctor,
 };
