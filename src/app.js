@@ -25,7 +25,16 @@ app.use("/api/v1/doctor", doctorRoutes);
 app.use("/api/v1/clinic", clinicRoutes);
 
 app.get("/", (req, res) => {
-    res.send("Welcome!");
+    let routes = [
+        "/                              GET",
+        "/api/v1/doctor/search          GET",
+        "/api/v1/doctor/:id             GET",
+        "/api/v1/doctor                 POST",
+        "/api/v1/clinic                 GET",
+        "/api/v1/clinic/:clinic         GET",
+        "/api/v1/clinic/:clinic/doctors GET"
+    ]
+    res.send(routes);
 });
 
 app.listen(PORT, () => {
