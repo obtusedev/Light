@@ -11,7 +11,10 @@ function isEmptyString(s) {
 }
 
 function isPositiveAndNumber(n) {
-    if (typeof(n) === "number" && n > 0) {
+    if (typeof(n) === "number") {
+        if (isNaN(parseInt(n))) {
+            return false;
+        }
         return true;
     }
     return false;
